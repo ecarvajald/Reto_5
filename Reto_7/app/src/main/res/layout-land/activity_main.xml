@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:title="Tic-Tac-Toe" />
+
+    <!-- Cuerpo dos columnas -->
+    <LinearLayout
+        android:id="@+id/content_row"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/board_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingEnd="12dp">
+
+            <co.edu.unal.tictactoe.BoardView
+                android:id="@+id/board"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- scores, estado, botones -->
+        <LinearLayout
+            android:id="@+id/side_panel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Scores -->
+            <LinearLayout
+                android:id="@+id/scores_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="3"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tv_score_human"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="You: 0"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_score_ties"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Ties: 0"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_score_android"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Android: 0"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- Texto de estado centrado -->
+            <TextView
+                android:id="@+id/information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your turn"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:paddingBottom="8dp"/>
+
+            <!-- Espaciador -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <!-- Botones -->
+            <LinearLayout
+                android:id="@+id/actions_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_new_game"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    app:backgroundTint="@color/pastel_purple"
+                    app:cornerRadius="24dp"
+                    app:icon="@drawable/ic_new_game"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="@android:color/white"
+                    app:iconSize="18dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_difficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Difficulty"
+                    android:layout_marginStart="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    app:backgroundTint="@color/pastel_purple"
+                    app:cornerRadius="24dp"
+                    app:icon="@drawable/ic_difficulty"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="@android:color/white"
+                    app:iconSize="18dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_quit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quit"
+                    android:layout_marginStart="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    app:backgroundTint="@color/pastel_purple"
+                    app:cornerRadius="24dp"
+                    app:icon="@drawable/ic_quit"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="@android:color/white"
+                    app:iconSize="18dp"/>
+            </LinearLayout>
+
+            <!-- Botón oculto -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_online"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

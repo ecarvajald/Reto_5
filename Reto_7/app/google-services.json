@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "806421830479",
+    "project_id": "tictactoegame-ec",
+    "storage_bucket": "tictactoegame-ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806421830479:android:244ca62d8e5c79047c433a",
+        "android_client_info": {
+          "package_name": "co.edu.unal.tictactoe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO_YK8Cz48eoge9Wj_6Hqf_1kAPtg-xGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
