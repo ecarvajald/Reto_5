@@ -1,0 +1,305 @@
+package co.edu.unal.tictactoe;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TicTacToeGame mGame;
+
+    // UI
+    private Button[] mBoardButtons;
+    private TextView mInfoTextView;
+
+    // Estado
+    private boolean mGameOver = false;
+    private boolean mAndroidThinking = false;
+    //marcadores
+    private int mHumanWins = 0, mAndroidWins = 0, mTies = 0;
+    // Quién empieza la PRÓXIMA partida
+    private boolean mHumanStartsNext = true;
+
+    // TextViews de marcadores
+    private TextView tvScoreHuman, tvScoreTies, tvScoreAndroid;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Toolbar (debe existir en el XML con id @+id/topAppBar)
+        MaterialToolbar tb = findViewById(R.id.topAppBar);
+        tb.setTitle(R.string.app_name);
+        tb.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_clear_scores) {
+                clearScores();  // ← se mantiene tal cual
+                return true;
+            } else if (item.getItemId() == R.id.action_about) {
+                showAboutDialog();  // ← abre tu diálogo About
+                return true;
+            }
+            return false;
+        });
+
+
+
+        // Enlazar UI
+        mBoardButtons = new Button[TicTacToeGame.BOARD_SIZE];
+        mBoardButtons[0] = findViewById(R.id.one);
+        mBoardButtons[1] = findViewById(R.id.two);
+        mBoardButtons[2] = findViewById(R.id.three);
+        mBoardButtons[3] = findViewById(R.id.four);
+        mBoardButtons[4] = findViewById(R.id.five);
+        mBoardButtons[5] = findViewById(R.id.six);
+        mBoardButtons[6] = findViewById(R.id.seven);
+        mBoardButtons[7] = findViewById(R.id.eight);
+        mBoardButtons[8] = findViewById(R.id.nine);
+        mInfoTextView = findViewById(R.id.information);
+
+        // Botones inferiores
+
+        MaterialButton btnNew  = findViewById(R.id.btn_new_game);
+        MaterialButton btnDiff = findViewById(R.id.btn_difficulty);
+        MaterialButton btnQuit = findViewById(R.id.btn_quit);
+
+
+        tvScoreHuman   = findViewById(R.id.tv_score_human);
+        tvScoreTies    = findViewById(R.id.tv_score_ties);
+        tvScoreAndroid = findViewById(R.id.tv_score_android);
+        updateScores();
+
+        
+        btnDiff.setOnClickListener(v -> showDifficultyDialog());
+        btnQuit.setOnClickListener(v -> confirmQuit());
+
+
+
+
+        // Motor
+        mGame = new TicTacToeGame();
+
+        // Arrancar
+        startNewGame();
+    }
+
+    /** Reinicia el tablero y registra listeners de los 9 botones */
+    private void startNewGame() {
+        // reiniciar estado
+        mGame.clearBoard();
+        mGameOver = false;
+        mAndroidThinking = false;
+
+        // limpiar y re-registrar listeners
+        for (int i = 0; i < mBoardButtons.length; i++) {
+            final int idx = i;
+            mBoardButtons[i].setText("");
+            mBoardButtons[i].setEnabled(true);
+            mBoardButtons[i].setOnClickListener(v -> onCellClicked(idx));
+        }
+
+        // mostrar quién arranca
+        if (mHumanStartsNext) {
+            mInfoTextView.setText(R.string.you_go_first);
+        } else {
+            // si empieza Android, muéstralo y haz su primera jugada tras una breve pausa
+            mInfoTextView.setText(R.string.turn_android);
+            mAndroidThinking = true;
+            mInfoTextView.postDelayed(() -> {
+                int move = mGame.getComputerMove();
+                setMove(TicTacToeGame.COMPUTER_PLAYER, move);
+                mAndroidThinking = false;
+
+                int w = mGame.checkForWinner();
+                if (w == 0) mInfoTextView.setText(R.string.turn_human);
+                else
+                    // si (raro) ganara o empatara en su primer movimiento
+                    finishGameWithResult(w); // si ya tienes este helper; si no, muestra el mensaje como haces en onCellClicked
+
+            }, 600);
+        }
+    }
+
+
+    /** Maneja el toque de una casilla */
+    /** Maneja el toque de una casilla (con pausa para mostrar "Android's turn.") */
+    private void onCellClicked(int location) {
+        // No permitir toques si terminó o si Android está "pensando"
+        if (mGameOver || mAndroidThinking || !mBoardButtons[location].isEnabled()) return;
+
+        // Juega humano
+        setMove(TicTacToeGame.HUMAN_PLAYER, location);
+
+        int winner = mGame.checkForWinner();
+        if (winner != 0) {
+            finishGameWithResult(winner);   // ← suma marcador y alterna el próximo inicio
+            return;
+        }
+
+
+        // Mostrar turno de Android y esperar un poco antes de que juegue
+        mInfoTextView.setText(R.string.turn_android);
+        mAndroidThinking = true;
+
+        // Ejecuta la jugada de Android tras 1 segundo (ajusta si quieres)
+        mInfoTextView.postDelayed(() -> {
+            int move = mGame.getComputerMove();
+            setMove(TicTacToeGame.COMPUTER_PLAYER, move);
+
+            int w = mGame.checkForWinner();
+            mAndroidThinking = false;
+
+
+            if (w == 0) {
+                mInfoTextView.setText(R.string.turn_human);
+            } else {
+                finishGameWithResult(w);
+            }
+        }, 1000);
+    }
+
+
+    /** Pinta X/O en el botón y deshabilita la casilla */
+    private void setMove(char player, int location) {
+        mGame.setMove(player, location);
+        Button b = mBoardButtons[location];
+        b.setEnabled(false);
+        b.setText(String.valueOf(player));
+        b.setTextColor(player == TicTacToeGame.HUMAN_PLAYER
+                ? Color.rgb(0, 200, 0)
+                : Color.rgb(200, 0, 0));
+    }
+
+    private void updateScores() {
+        tvScoreHuman.setText(getString(R.string.score_human, mHumanWins));
+        tvScoreTies.setText(getString(R.string.score_ties, mTies));
+        tvScoreAndroid.setText(getString(R.string.score_android, mAndroidWins));
+    }
+
+    private void finishGameWithResult(int winner) {
+        if (winner == 1) {
+            mInfoTextView.setText(R.string.result_tie);
+            mTies++;
+        } else if (winner == 2) {
+            mInfoTextView.setText(R.string.result_human_wins);
+            mHumanWins++;
+        } else { // winner == 3
+            mInfoTextView.setText(R.string.result_android_wins);
+            mAndroidWins++;
+        }
+        mGameOver = true;
+        updateScores();
+        // alterna el que empieza para la próxima
+        mHumanStartsNext = !mHumanStartsNext;
+    }
+
+    private void clearScores() {
+        mHumanWins = 0;
+        mAndroidWins = 0;
+        mTies = 0;
+        updateScores();                          // refresca la barra
+        mInfoTextView.setText(R.string.scores_cleared); // mensaje opcional
+        // NO tocamos el tablero ni mHumanStartsNext
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_clear_scores) {
+            clearScores();
+            return true;
+        } else if (id == R.id.action_about) {
+            showAboutDialog();   // <-- abre tu diálogo About
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void onNewGameClicked(View v) {
+        startNewGame();  // solo nuevo juego, sin borrar marcadores
+    }
+
+
+    // --- DIÁLOGO DE DIFICULTAD ---
+    private void showDifficultyDialog() {
+        final CharSequence[] levels = {
+                getString(R.string.level_easy),
+                getString(R.string.level_harder),
+                getString(R.string.level_expert)
+        };
+
+        final int checked = mGame.getDifficultyLevel().ordinal();
+        final int[] selectedIndex = { checked };
+
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.choose_level)
+                .setSingleChoiceItems(levels, checked, (dialog, which) -> {
+                    selectedIndex[0] = which;
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    TicTacToeGame.DifficultyLevel sel =
+                            TicTacToeGame.DifficultyLevel.values()[selectedIndex[0]];
+                    mGame.setDifficultyLevel(sel);
+                    if (mInfoTextView != null) {
+                        mInfoTextView.setText(
+                                getString(R.string.choose_level) + ": " + levels[selectedIndex[0]]
+                        );
+                    }
+                    // startNewGame(); // opcional
+                })
+                .show();
+    } // <-- CIERRE de showDifficultyDialog()
+
+    // --- CONFIRMAR SALIDA ---
+    private void confirmQuit() {
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.quit)
+                .setMessage(R.string.confirm_quit)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.exit, (d, w) -> {
+                    finishAffinity(); // o finish();
+                })
+                .show();
+    } // <-- CIERRE de confirmQuit()
+
+
+    private void showAboutDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View content = inflater.inflate(R.layout.about_dialog, null, false);
+
+        // Si quieres personalizar dinámicamente:
+        // TextView tvAuthor = content.findViewById(R.id.tv_author);
+        // tvAuthor.setText("Programmer: Elsy Carvajal");
+
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.about_title)
+                .setView(content)
+                .setPositiveButton(R.string.about_ok, null)
+                .show();
+    }
+
+
+} // <-- CIERRE FINAL de la clase MainActivity
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Categorías para el spinner -->
+    <string-array name="poi_categories">
+        <item>Hospitales</item>
+        <item>Lugares turísticos</item>
+        <item>Restaurantes</item>
+        <item>Gasolineras</item>
+    </string-array>
+
+    <!-- Radio en km para preferencias -->
+    <string-array name="radios">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="radios_values">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+
+</resources>
+

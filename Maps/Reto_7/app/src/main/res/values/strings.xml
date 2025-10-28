@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tic-Tac-Toe</string>
+    <string name="online_title">Tic-Tac-Toe Online</string>
+    <string name="clear_scores">Clear scores.</string>
+    <string name="scores_cleared">Scores cleared.</string>
+    <string name="you_go_first">You go first.</string>
+    <string name="turn_human">Your turn.</string>
+    <string name="turn_android">Android\'s turn.</string>
+    <string name="result_tie">It\'s a tie.</string>
+    <string name="result_human_wins">You won!</string>
+    <string name="result_android_wins">Android won!</string>
+    <string name="score_human">Human: %1$d</string>
+    <string name="score_ties">Ties: %1$d</string>
+    <string name="score_android">Android: %1$d</string>
+    <string name="level_easy">Easy</string>
+    <string name="level_harder">Harder</string>
+    <string name="level_expert">Expert</string>
+    <string name="choose_level">Choose difficulty</string>
+    <string name="new_game">New Game</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="quit">Quit</string>
+    <string name="exit">Exit</string>
+    <string name="confirm_quit">Do you want to exit the game?</string>
+    <string name="about">About</string>
+    <string name="about_title">About this app</string>
+    <string name="about_ok">OK</string>
+    <string name="about_author">Programmer: Elsy Carvajal</string>
+    <string name="about_desc">Choose from one of the three difficulty levels. Don\'t let the Android beat you!</string>
+    <string name="board_desc">Tablero de tres en raya</string>
+
+</resources>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:padding="16dp">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:title="@string/app_name"
+        app:menu="@menu/main_menu" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:id="@+id/tv_score_human"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/score_human" />
+
+        <TextView
+            android:id="@+id/tv_score_ties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/score_ties" />
+
+        <TextView
+            android:id="@+id/tv_score_android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/score_android" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/space_above_grid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5" />   <!-- empuja el grid hacia abajo -->
+
+
+    <TableLayout
+        android:id="@+id/play_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+    <TableRow android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/one"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="1"
+            android:textSize="70dp" />
+
+        <Button
+            android:id="@+id/two"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="2"
+            android:textSize="70dp" />
+
+        <Button
+            android:id="@+id/three"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:text="3"
+            android:textSize="70dp" />
+    </TableRow>
+
+    <TableRow android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/four"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="4"
+            android:textSize="70dp"/>
+
+        <Button
+            android:id="@+id/five"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="5"
+            android:textSize="70dp"/>
+
+        <Button
+            android:id="@+id/six"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="6"
+            android:textSize="70dp"/>
+    </TableRow>
+
+        <TableRow android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/seven"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="7"
+                android:textSize="70dp"/>
+
+            <Button
+                android:id="@+id/eight"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="8"
+                android:textSize="70dp"/>
+
+            <Button
+                android:id="@+id/nine"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="9"
+                android:textSize="70dp"/>
+        </TableRow>
+
+</TableLayout>
+
+    <TextView
+        android:id="@+id/information"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="info" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Barra inferior con New / Difficulty / Quit -->
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_new_game"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:text="@string/new_game"
+            android:onClick="onNewGameClicked"
+            app:icon="@drawable/ic_new_game"
+            app:iconGravity="textTop"
+            app:iconSize="24dp"
+            app:iconPadding="6dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_difficulty"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:text="@string/difficulty"
+            app:icon="@drawable/ic_difficulty"
+            app:iconGravity="textTop"
+            app:iconSize="24dp"
+            app:iconPadding="6dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_quit"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:text="@string/quit"
+            app:icon="@drawable/ic_quit"
+            app:iconGravity="textTop"
+            app:iconSize="24dp"
+            app:iconPadding="6dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+

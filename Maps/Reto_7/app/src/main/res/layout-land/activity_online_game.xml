@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/app_name"  />       <!-- o @string/online_title -->
+
+    <!-- Espaciador superior para centrar verticalmente el bloque central -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- FILA CENTRAL: tablero (izq) + panel derecho (estado + botón Home) -->
+    <LinearLayout
+        android:id="@+id/row_center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal">
+
+        <!-- Columna izquierda: texto + tablero -->
+        <LinearLayout
+            android:id="@+id/left_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="start|center_horizontal"
+            android:layout_marginEnd="12dp">
+
+            <TextView
+                android:id="@+id/tv_info_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conectando..."
+                android:gravity="center"
+                android:paddingBottom="8dp" />
+
+            <co.edu.unal.tictactoe.BoardView
+                android:id="@+id/board"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:contentDescription="@string/board_desc" />
+        </LinearLayout>
+
+        <!-- Separador flexible para empujar el panel derecho hacia el borde -->
+        <Space
+            android:layout_width="12dp"
+            android:layout_height="0dp" />
+
+        <!-- Columna derecha: estado + botón Home alineados a la derecha -->
+        <LinearLayout
+            android:id="@+id/right_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_go_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Inicio"
+                app:icon="@drawable/ic_home"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconSize="24dp"
+                app:iconTint="?attr/colorOnPrimary" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
