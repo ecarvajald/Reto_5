@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_info"
+        android:title="Sobre MTB Chatbot"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="never" />
+    <!-- opciones:
+         app:showAsAction="always"
+         app:showAsAction="ifRoom"
+         app:showAsAction="ifRoom|withText"
+         app:showAsAction="never"  (sale en los tres puntitos)
+    -->
+</menu>
